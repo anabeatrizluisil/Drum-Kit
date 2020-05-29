@@ -17,6 +17,8 @@ body {
 }
 
 .key {
+    display: flex;
+    flex-direction: column;
     border: .3rem solid black;
     border-radius: .5rem;
     margin: 1rem;
