@@ -1,18 +1,24 @@
 
-// Allow the user to play a sound everytime they press a key
-function playSound(e) {
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+function playSound(code) {
+    const audio = document.querySelector(`audio[data-key="${code}"]`);
+    const key = document.querySelector(`.key[data-key="${code}"]`);
     console.log(key);
-    // If keyCode doesn't belong to any sound, stops function
+
     if (!audio) return;
 
-    // Allows to play everytime you hit a key
     audio.currentTime = 0;
     audio.play();
 
-    // Adds the class playing to key
     key.classList.add('playing');
+}
+
+function keyDownHandler(e) {
+    playSound(e.keyCode);
+}
+
+function clickHandler(e) {
+    const code = this.dataset.key;
+    playSound(code);
 }
 
 // Remove the playing class after the user hits a key
@@ -23,6 +29,8 @@ function removeTransition(e) {
 
 // Call functions
 const keys = document.querySelectorAll('.key');
-keys.forEach(key => key.addEventListener('transitionend', removeTransition));
 
-window.addEventListener('keydown', playSound);
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+keys.forEach(key => key.addEventListener('click', clickHandler));
+
+window.addEventListener('keydown', keyDownHandler);
